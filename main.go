@@ -85,6 +85,7 @@ func NotZeroAnd3Multi(done <-chan bool, number <-chan int) <-chan int {
 					select {
 					case filtered <- checkNumber:
 					case <-done:
+						log.Println("Запись лога: 2 этап обработки получил сигнал о завершении работы.")
 						return
 					}
 				} else {
@@ -135,10 +136,11 @@ func BufferAndTimeout(bSize int, bTimeout time.Duration, done <-chan bool, numbe
 				if len(numbersFromBuffer) > 0 {
 					select {
 					case bufferChan <- numbersFromBuffer:
+						log.Printf("Запись лога: Из буфера прочитаны данные %v и отправлены конечному получателю данных.\n", numbersFromBuffer)
 					case <-done:
+						log.Println("Запись лога: 3 этап обработки: функция вывода данных из буфера получил сигнал о завершении работы.")
 						return
 					}
-					log.Printf("Запись лога: Из буфера прочитаны данные %v и отправлены конечному получателю данных.\n", numbersFromBuffer)
 				} else {
 					log.Printf("Запись лога: По истечению таймаута %v из буфера данные не прочитаны, он пуст", bTimeout)
 				}
