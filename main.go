@@ -84,7 +84,7 @@ func NotZeroAnd3Multi(done <-chan bool, number <-chan int) <-chan int {
 	return filtered
 }
 
-// Третий этап пайплайна записывающий данные в фильтр и выдающий их по таймайту партией
+// Третий этап пайплайна записывающий данные в фильтр и выдающий их по таймауту партией
 // кроме каналов для работы принимает размер буфера и таймаут для отправки данных в секундах
 func BufferAndTimeout(bSize int, bTimeout time.Duration, done <-chan bool, number <-chan int) <-chan []int {
 	bufferChan := make(chan []int)
